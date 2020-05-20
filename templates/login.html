@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head>
+
+    <!--- basic page needs
+    ================================================== -->
+    <meta charset="utf-8">
+    <title>Reports3D</title>
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- mobile specific metas
+    ================================================== -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- CSS
+    ================================================== -->
+    <link rel="stylesheet" href="static/css/base.css">
+    <link rel="stylesheet" href="static/css/vendor.css">
+    <link rel="stylesheet" href="static/css/main.css">
+
+    <!-- script
+    ================================================== -->
+    <script src="static/js/modernizr.js"></script>
+    <script src="static/js/pace.min.js"></script>
+
+    <!-- favicons
+    ================================================== -->
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+
+    <style>
+        .s-homenew{
+            width: 100%;
+            height: 100%;
+            min-height: 786px;
+            background-color: transparent;
+            position: relative;
+            display: table;
+        }
+        body{
+            background: white;
+        }
+    </style>
+
+</head>
+
+<body id="top">
+
+    <!-- <section id="styles" class="s-styles s-homenew" style="padding-top: 15%;" data-parallax="scroll" data-image-src="static/images/bglog.jpg" data-natural-width=3000 data-natural-height=2000 data-position-y=top> -->
+    <section id="styles" class="s-styles" style="padding-top: 10%;" >
+
+        <div class="row narrow section-intro add-bottom text-center">
+
+            <div class="col-six tab-full">
+
+                <form method="post" action='/loginuser'>
+                    <h3>Exsisting User:</h3>
+                    <div>
+                        <input class="full-width" name="email_id" type="email" placeholder="Enter Mail Address" id="sampleInput">
+                        <input class="full-width" name="password" type="password" placeholder="Enter Password" id="sampleInput">
+                        <input class="btn--primary" type="submit" value="Login">
+                    </div> 
+                </form>
+
+            </div>
+            <div class="col-six tab-full">
+
+                <form>
+                    <h3>New User:</h3>
+                    <div>
+                        <input class="full-width" type="text" placeholder="Enter Username" id="sampleInput">
+                        <input class="full-width" type="email" placeholder="Enter Mail Address" id="sampleInput">
+                        <input class="full-width" type="password" placeholder="Enter Password" id="sampleInput">
+                        <input class="btn--primary" type="submit" value="Signup">
+                    </div>
+                    
+                </form>
+
+            </div>
+
+        </div>
+    </section>
+    
+
+    <!-- preloader
+    ================================================== -->
+    <div id="preloader">
+        <div id="loader">            
+        </div>
+    </div>
+
+
+    <!-- Java Script
+    ================================================== -->
+    <script src="static/js/jquery-3.2.1.min.js"></script>
+    <script src="static/js/plugins.js"></script>
+    <script src="static/js/main.js"></script>
+
+</body>
+
+</html>

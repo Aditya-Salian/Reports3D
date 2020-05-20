@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html class="no-js">
+    <head>
+
+        <!--- basic page needs
+        ================================================== -->
+        <meta charset="utf-8">
+        <title>Transcend - Styles</title>
+        <meta name="description" content="">
+        <meta name="author" content="">
+
+        <!-- mobile specific metas
+        ================================================== -->
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <!-- CSS
+        ================================================== -->
+        <link rel="stylesheet" href="static/css/base.css">
+        <link rel="stylesheet" href="static/css/vendor.css">
+        <link rel="stylesheet" href="static/css/main.css">
+
+        <!-- script
+        ================================================== -->
+        <script src="static/js/modernizr.js"></script>
+        <script src="static/js/pace.min.js"></script>
+
+        <!-- favicons
+        ================================================== -->
+        <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+        <link rel="icon" href="favicon.ico" type="image/x-icon">
+        
+        <style type="text/css" media="screen">
+            body { 
+                background: white;
+                padding-top: 0rem;
+                padding-bottom: 0rem;
+            }
+        </style>
+    </head>
+    <body>
+        <section id="styles" class="s-styles">
+            <div class="row">
+                <div class="col-twelve tab-full">
+                    <h1 style="margin-bottom: 0px;">Dashboard</h1> 
+                </div>
+                <!-- <div class="col-six text-right tab-full">
+                    <a class="btn" href="#0" style="background: none; margin-top: 2em; padding-left: 20px; border: none; font-size: xx-large;"><i class="fas fa-sign-out-alt"></i></a>
+                </div>   -->
+            </div>
+            <div class="row">
+                <!-- <h1>Dashboard</h1> -->
+                <form method="post" action='/uploader' enctype = "multipart/form-data">
+                    <div class="col-six tab-full">
+                        <h3 style="margin-top: 0px;">Patient Details</h3>
+                        <div>
+                            <label for="sampleInput">Patient ID</label>
+                            <input class="full-width" name="p_id" type="text" placeholder="Enter Name" id="sampleInput">
+                        </div>
+                        <div>
+                            <label for="sampleInput">Name</label>
+                            <input class="full-width" name="name" type="text" placeholder="Enter Name" id="sampleInput">
+                        </div>
+                    
+                        <label for="exampleMessage">Comments</label>
+                        <textarea class="full-width" name="comment" placeholder="Description" id="exampleMessage"></textarea> 
+                    </div>
+                    <div class="col-six tab-full">
+                        <h3 style="margin-top: 0px;">Upload Files</h3>
+                        <div>
+                            <label for="sampleInput">Flair</label>
+                            <input type = "file" name = "file1" />
+                        </div>
+                        
+                        <div>
+                            <label for="sampleInput">T2</label>
+                            <input type = "file" name = "file2" />
+                        </div>
+                        
+                        <input class="btn btn--primary full-width" type="submit" value="Save and View">
+                    </div>
+                    
+                </form>
+                
+            </div>
+            
+            <div class="row add-bottom">
+
+                <div class="col-twelve">
+    
+                    <h3>Saved Patients</h3>
+    
+                    <div class="table-responsive">
+    
+                        <table>
+                                <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Name</th>
+                                    <th>Comments</th>
+                                    <th>Link</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for row in rows %}
+                                <tr>
+                                    <td>{{row[0]}}</td>
+                                    <td>{{row[1]}}</td>
+                                    <td><form action="/output" method="POST" >
+                                        <button type="submit" name="p_id" value="{{row[0]}}">Open 3D Model</button> 
+                                    </form></td>
+                                    <td id="test">{{row[3]}}
+                                        <button onclick="copyToClipboard('#test')" style="background: none; margin: 0; padding-left: 20px; border: none; font-size: large;"><i class="far fa-clipboard"></i></button>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                                </tbody>
+                        </table>
+    
+                    </div>
+    
+                </div>
+                
+            </div> <!-- end row -->
+            <div class="row">
+                <div class="col-twelve text-right tab-full">
+                    <a class="btn btn--stroke" href="/login" style="margin-top: 0rem;">Logout</a>
+                </div>  
+            </div>
+        </section>
+
+
+        <!-- preloader
+        ================================================== -->
+        <div id="preloader">
+            <div id="loader">
+            </div>
+        </div>
+
+
+        <!-- Java Script
+        ================================================== -->
+        <script>
+            function copyToClipboard(element) {
+            var $temp = $("<input>");
+            $("body").append($temp);
+            $temp.val($(element).text()).select();
+            document.execCommand("copy");
+            $temp.remove();
+            }
+        </script>
+        <script src="static/js/jquery-3.2.1.min.js"></script>
+        <script src="static/js/plugins.js"></script>
+        <script src="static/js/main.js"></script>
+    </body>
+</html>
