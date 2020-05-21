@@ -35,24 +35,25 @@ def create_sql_table(con):
 
 	'''
 	cursorObj = con.cursor()
-	cursorObj.execute("CREATE TABLE IF NOT EXISTS doctor_table(doc_id integer PRIMARY KEY, username text NOT NULL, password varchar NOT NULL, email varchar(30) NOT NULL)")
-	cursorObj.execute("CREATE TABLE IF NOT EXISTS patient_table(pat_id integer PRIMARY KEY, doc_id integer NOT NULL, name text NOT NULL, comments text, link varchar, FOREIGN KEY (doc_id) REFERENCES doctor_table (doc_id))")
+	cursorObj.execute("CREATE TABLE IF NOT EXISTS doctor_table(doc_id integer PRIMARY KEY AUTOINCREMENT, username text NOT NULL, email varchar(30) NOT NULL UNIQUE, password varchar NOT NULL)")
+	cursorObj.execute("CREATE TABLE IF NOT EXISTS patient_table(pat_id integer PRIMARY KEY, doc_id integer NOT NULL, name text NOT NULL, comments text, link varchar, FOREIGN KEY (doc_id) REFERENCES doctor_table(doc_id))")
 	con.commit()
 
 
 def doctor_register():
 	'''
 	
+	populated from the webinterface directly
 	Function to MANUALLY register new doctor details
 	Pass details from the web form here
 	(remove the manual inputs)
 
 	'''
-	doc_id=int(input("Enter ID: "))
+	# doc_id=int(input("Enter ID: "))
 	username=input("Enter username: ")
 	email=input("Enter email: ")
 	password=input("Enter password: ")
-	return (doc_id, username, password, email)
+	return (username, email, password)
 
 
 def doctor_insert(con,values_to_insert):
@@ -65,7 +66,7 @@ def doctor_insert(con,values_to_insert):
 
 	'''
 	cursorObj=con.cursor()
-	query="INSERT INTO doctor_table VALUES(?,?,?,?)"
+	query="INSERT INTO doctor_table(username, email, password) VALUES(?,?,?)"
 	cursorObj.execute(query,values_to_insert)
 	con.commit()
 
@@ -78,22 +79,14 @@ def login(con, email, password):
 	sql table connection
 
 	'''
-	uid=email
-	pwd=password
 	cursor=con.cursor()
 	cursor.execute("SELECT doc_id, email, password FROM doctor_table")
 	rows=cursor.fetchall()
 	for row in rows:
-		if row[1]==uid:
-			if row[2]==pwd:
-				# print("Access granted")
+		if row[1]==email:
+			if row[2]==password:
 				return True, row[0]  #Return doctor ID in order to ensure only that doctors patients can be accessed.
-			else:
-				# print("Access denied")
-				return False
-		else:
-			# print("Access denied")
-			return False
+	return False, -99
 	con.commit()
 
 
@@ -107,10 +100,11 @@ def patient_insert(con, values_to_insert):
 
 	'''
 	cursorObj=con.cursor()
-	query="INSERT INTO patient_table VALUES(?,?,?,?,?)"
+	query="INSERT INTO patient_table (pat_id, doc_id, name, comments, link) VALUES(?,?,?,?,?)"
 	try:
 		cursorObj.execute(query,values_to_insert)
 	except Error:
+		print(Error)
 		print("Patient needs valid doctor_id")
 	con.commit()
 
@@ -132,32 +126,38 @@ def find_patient(con, d_id):
 	con.commit()
 
 	
-# def doctor_select(con):
-# 	'''
+def doctor_select(con):
+	'''
 
-# 	pprint all rows of doctor table
+	pprint all rows of doctor table
 
-# 	'''
-# 	cursor=con.cursor()
-# 	cursor.execute("SELECT * FROM doctor_table")
-# 	rows=cursor.fetchall()
-# 	for row in rows:
-# 		print(row)
-# 	con.commit()
+	'''
+	cursor=con.cursor()
+	cursor.execute("SELECT * FROM doctor_table")
+	rows=cursor.fetchall()
+	for row in rows:
+		print(row)
+	con.commit()
 
 
-# def patient_select(con):
-# 	'''
+def patient_select(con):
+	'''
 
-# 	pprint all rows of patient table
+	pprint all rows of patient table
 
-# 	'''
-# 	cursor=con.cursor()
-# 	cursor.execute("SELECT * FROM patient_table")
-# 	rows=cursor.fetchall()
-# 	for row in rows:
-# 		print(row)
-# 	con.commit()
+	'''
+	cursor=con.cursor()
+	cursor.execute("SELECT * FROM patient_table")
+	rows=cursor.fetchall()
+	for row in rows:
+		print(row)
+	con.commit()
+
+def drop_tables(con):
+	cursor=con.cursor()
+	cursor.execute("DROP TABLE patient_table")
+	cursor.execute("DROP TABLE doctor_table")
+	con.commit()
 
 
 if __name__=='__main__':
@@ -166,13 +166,22 @@ if __name__=='__main__':
 	# check(con)
 	# create_sql_table(con)
 
-
 	'''Inserting into doctor table'''
-	# doctor_values_to_insert=doctor_register()
-	# doctor_insert(con, doctor_values_to_insert)
+	# for i in range(4):
+	# 	doctor_values_to_insert=doctor_register()
+	# 	doctor_insert(con, doctor_values_to_insert)
+
+	'''Inserting into patient table'''
+	# (pat_id, doc_id, name, comments, link)
+	# for i in range(1,5):
+	# 	values=(100+i, i,"patient"+str(i),"None", "test")
+	# 	patient_insert(con, values)
 	
 	''' Print doctor table'''
 	# doctor_select(con)
 		
 	''' Print patient table'''
 	# patient_select(con)
+
+	'''drop tables'''
+	# drop_tables(con)

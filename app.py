@@ -15,8 +15,14 @@ def output():
 		p_id = request.form['p_id']
 		return render_template('output.html', f = f'{p_id}modelnew.gltf')
 
-@app.route('/login')
+@app.route('/login', methods=['GET', 'POST'])
 def logindef():
+	if request.method == 'POST':
+		email=request.form["email"]
+		password=request.form["password"]
+		username=request.form["username"]
+		values_to_insert=(username, email, password)
+		doctor_insert(con,values_to_insert)
 	return render_template('login.html')
 
 
@@ -24,15 +30,17 @@ d_id=0
 @app.route('/loginuser', methods=['GET', 'POST'])
 def loginuserdef():
 	if request.method == 'POST':
-		email=request.form["email_id"] #user name is shlokshah or adityasalian or vvyomshah or parinshah
-		#hardcoded it here for now since login form wants in '@ .com' format and databse has shlokshah stored
-		email="shlokshah" 
+		email=request.form["email_id"] 
 		password=request.form["password"] #pwd is test123
 		global d_id
 		access, d_id=login(con, email, password)
 		if access:
-			rows=find_patient(con, d_id)
-			return render_template('dashboard.html', rows=rows)
+			try:
+				rows=find_patient(con, d_id)
+				return render_template('dashboard.html', rows=rows)
+			except:
+				pass
+				# return render_template('login.html')     CHECK THIS
 		else:
 			return redirect('/login')
 
@@ -52,7 +60,8 @@ def upload_file():
 		t2 = file1.filename
 		Create3DModel(flair, t2, p_id)
 		path = TextureEdit(p_id)
-		values_to_insert=(p_id, d_id, name, comment,path)
+		'''insert into database'''
+		values_to_insert=(p_id, d_id, name, comment, path)
 		patient_insert(con, values_to_insert)
 		removefiles(flair,t2)
 		# file1 = request.files['file1']
