@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for
 from DB_functions import *
-# from FinalCodeFunctions import Create3DModel, TextureEdit, removefiles
+from FinalCodeFunctions import Create3DModel, TextureEdit, removefiles
 # from werkzeug import secure_filename
 # from FinalCodeFunctions import Create3DModel, TextureEdit
 app = Flask(__name__)
@@ -58,12 +58,12 @@ def upload_file():
 		file2.save((file2.filename))
 		flair = file1.filename
 		t2 = file1.filename
-		# Create3DModel(flair, t2, p_id)
-		# path = TextureEdit(p_id)
-		path="."
+		Create3DModel(flair, t2, p_id)
+		path = TextureEdit(p_id)
+		'''insert into database'''
 		values_to_insert=(p_id, d_id, name, comment, path)
 		patient_insert(con, values_to_insert)
-		# removefiles(flair,t2)
+		removefiles(flair,t2)
 		# file1 = request.files['file1']
 		# file1.save(secure_filename(file1.filename))
 		# file2 = request.files['file2']
