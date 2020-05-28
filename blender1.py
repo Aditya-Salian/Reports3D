@@ -1,6 +1,6 @@
 import bpy
-brain_filepath = 'C://Users//Parin//Flask_test//brain.stl'
-tumour_filepath = 'C://Users//Parin//Flask_test//tumour.stl'
+brain_filepath = '/Users/adityasalian/Desktop/College/transcend1-1/brain.stl'
+tumour_filepath = '/Users/adityasalian/Desktop/College/transcend1-1/tumour.stl'
 
 bpy.ops.import_mesh.stl(filepath=brain_filepath)
 bpy.ops.import_mesh.stl(filepath=tumour_filepath)

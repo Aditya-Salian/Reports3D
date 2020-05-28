@@ -4,8 +4,8 @@ argv = sys.argv
 argv = argv[argv.index("--") + 1:]
 id = argv[0]
 
-brain_filepath = 'C://Users//Parin//transcend1//transcend1//brain.stl'
-tumour_filepath = 'C://Users//Parin//transcend1//transcend1//tumour.stl'
+brain_filepath = '/Users/adityasalian/Desktop/College/transcend1-1/brain.stl'
+tumour_filepath = '/Users/adityasalian/Desktop/College/transcend1-1/tumour.stl'
 
 bpy.ops.import_mesh.stl(filepath=brain_filepath)
 bpy.ops.import_mesh.stl(filepath=tumour_filepath)
@@ -37,6 +37,6 @@ bpy.context.object.location[2] = 155
 bpy.context.object.rotation_euler[0] = -1.5708
 bpy.context.object.rotation_euler[1] = 1.5708
 
-path = "C://Users//Parin//transcend1//transcend1//static//" + id +"modelnew.gltf"
+path = "/Users/adityasalian/Desktop/College/transcend1-1/static/" + id +"modelnew.gltf"
 bpy.ops.object.editmode_toggle()
 bpy.ops.export_scene.gltf(export_format = "GLTF_EMBEDDED", filepath = path, export_materials = True)

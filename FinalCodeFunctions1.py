@@ -34,7 +34,7 @@ LR = 1e-4
 num_of_patch = 4 #must be a square number
 label_num = 5
 
-path = r'C:\\Users\\Parin\\Flask_test\\'
+path = r'/Users/adityasalian/Desktop/College/transcend1-1/'
 
 
 
@@ -219,8 +219,9 @@ def Create3DModel():
     
     createSTL(path + 'tumour.mha', path + 'tumour.stl')
     createSTL(path + 'brain.mha', path + 'brain.stl')
-    
-    os.system(r'cmd /c "blender --background --python blender.py" ')
+
+    os.system(f'cd /Users/adityasalian/Desktop/College/transcend1-1')
+    os.system(f'blender --background --python blender.py')
     
     
     return 0

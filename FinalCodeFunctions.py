@@ -19,6 +19,8 @@ import vtk
 import os
 import sys
 import json
+import shlex
+import subprocess
 
     
 #https://www.codesofinterest.com/2016/11/keras-image-dim-ordering.html
@@ -34,7 +36,7 @@ LR = 1e-4
 num_of_patch = 4 #must be a square number
 label_num = 5
 
-path = r'C:\\Users\\Parin\\transcend1\\transcend1\\'
+path = r'/Users/adityasalian/Desktop/College/transcend1-1/'
 
 
 def create_data_onesubject_val(src):
@@ -219,8 +221,8 @@ def Create3DModel(flair, t2, id):
     createSTL(path + 'tumour.mha', path + 'tumour.stl')
     createSTL(path + 'brain.mha', path + 'brain.stl')
 
+    os.system(f'cd /Users/adityasalian/Desktop/College/transcend1-1')
     os.system(f'blender --background --python blender.py -- {id}')
-    
     
     return 0
 
@@ -247,16 +249,31 @@ def TextureEdit(id):
     with open(str(path + 'static/' + id + 'modelnew.gltf'), 'w') as json_file:
         json.dump(obj, json_file)
         
-        
-    return (str(path + 'static/' + id + 'modelnew.gltf'))
+    path_to_gltf = str(path + 'static/' + id + 'modelnew.gltf')
+    path_to_usdz = str(path + "static/" + id + "modelnew.usdz")
+
+    
+    usdz_command = str("usd_from_gltf " + path_to_gltf + " " + path_to_usdz)
+
+    usdz_shell_command = shlex.split(usdz_command)
+
+    out = subprocess.Popen(usdz_shell_command, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+
+
+    gltf_file_name = path_to_gltf[path_to_gltf.rfind('/')+1::]
+
+    usdz_file_name = path_to_usdz[path_to_usdz.rfind('/')+1::]
+    
+    #return path_to_gltf , path_to_usdz
+    return gltf_file_name, usdz_file_name
 
 def removefiles(flair,t2):
     os.remove("brain.mha")
     os.remove("brain.stl")
     os.remove("tumour.mha")
     os.remove("tumour.stl")
-    os.remove(flair)
-    os.remove(t2)
+    # os.remove(flair)
+    # os.remove(t2)
 
 
 

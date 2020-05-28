@@ -30,8 +30,10 @@
 <body>
 
   <div class="grid-container">
-    <model-viewer class="a"		  		
-                  src= "{{ url_for('static', filename= f) }}"
+    <model-viewer class="a"
+                  ar	  		
+                  src= "{{ url_for('static', filename= f1) }}"
+                  ios-src= "{{ url_for('static', filename= f2) }}"
                   background-color="#666"
                   shadow-intensity="1"
                   camera-controls

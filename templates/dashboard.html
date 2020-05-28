@@ -108,8 +108,8 @@
                                     <td><form action="/output" method="POST" >
                                         <button type="submit" name="p_id" value="{{row[0]}}">Open 3D Model</button> 
                                     </form></td>
-                                    <td id="test">{{row[3]}}
-                                        <button onclick="copyToClipboard('#test')" style="background: none; margin: 0; padding-left: 20px; border: none; font-size: large;"><i class="far fa-clipboard"></i></button>
+                                    <td id="test">{{request.url_root[:-1] + url_for('output_from_url', p_id = row[0])}}
+                                        <button onclick="copyToClipboard('{{request.url_root[:-1] + url_for('output_from_url', p_id = row[0])}}')" style="background: none; margin: 0; padding-left: 20px; border: none; font-size: large;"><i class="far fa-clipboard"></i></button>
                                     </td>
                                 </tr>
                                 {% endfor %}
@@ -140,13 +140,31 @@
         <!-- Java Script
         ================================================== -->
         <script>
-            function copyToClipboard(element) {
-            var $temp = $("<input>");
-            $("body").append($temp);
-            $temp.val($(element).text()).select();
-            document.execCommand("copy");
-            $temp.remove();
+            // function copyToClipboard(element) {
+            // var $temp = $("<input>");
+            // $("body").append($temp);
+            // $temp.val($(element).text()).select();
+            // document.execCommand("copy");
+            // $temp.remove();
+            // }
+            const copyToClipboard = str => {
+            const el = document.createElement('textarea');
+            el.value = str;
+            el.setAttribute('readonly', '');
+            el.style.position = 'absolute';
+            el.style.left = '-9999px';
+            document.body.appendChild(el);
+            const selected =
+                document.getSelection().rangeCount > 0 ? document.getSelection().getRangeAt(0) : false;
+            el.select();
+            document.execCommand('copy');
+            document.body.removeChild(el);
+            if (selected) {
+                document.getSelection().removeAllRanges();
+                document.getSelection().addRange(selected);
             }
+            };
+
         </script>
         <script src="static/js/jquery-3.2.1.min.js"></script>
         <script src="static/js/plugins.js"></script>
