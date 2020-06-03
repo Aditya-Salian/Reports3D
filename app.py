@@ -99,3 +99,6 @@ if __name__ == '__main__':
 	check(con)
 	create_sql_table(con)
 	app.run(port=5000,debug = True)
+
+
+
